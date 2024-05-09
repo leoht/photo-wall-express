@@ -9,7 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+# Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      mongodb:
+        # Docker Hub image
+        image: mongodb
     steps:
       - uses: actions/checkout@v4
 
@@ -19,6 +24,8 @@ jobs:
           node-version: '18.x'
 
       - name: npm install, build, and test
+        env:
+          MONGODB_URL: mongodb://mongodb/photo-wall
         run: |
           npm install
           npm run test 
